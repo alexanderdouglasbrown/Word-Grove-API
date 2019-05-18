@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.352
+VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Word-Hole-API", "Word Hole API\Word-Hole-API.csproj", "{B32FFEE1-B6F1-43FF-92E1-8D10051F35FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Word-Hole-API", "Word-Hole-API\Word-Hole-API.csproj", "{65808341-D5BC-4EE5-A8D3-48D3B65A8C7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B32FFEE1-B6F1-43FF-92E1-8D10051F35FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B32FFEE1-B6F1-43FF-92E1-8D10051F35FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B32FFEE1-B6F1-43FF-92E1-8D10051F35FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B32FFEE1-B6F1-43FF-92E1-8D10051F35FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65808341-D5BC-4EE5-A8D3-48D3B65A8C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65808341-D5BC-4EE5-A8D3-48D3B65A8C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65808341-D5BC-4EE5-A8D3-48D3B65A8C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65808341-D5BC-4EE5-A8D3-48D3B65A8C7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {748A5566-BB59-42F0-8D0F-87AB910BC3D9}
+		SolutionGuid = {4AD99E98-8954-4FDA-9F87-B0DC99DD5000}
 	EndGlobalSection
 EndGlobal
