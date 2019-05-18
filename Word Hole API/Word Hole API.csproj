@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <RootNamespace>Word_Hole_API</RootNamespace>
+    <AssemblyName>Word-Hole-API</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
