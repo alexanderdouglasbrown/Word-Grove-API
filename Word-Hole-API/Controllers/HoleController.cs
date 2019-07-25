@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Word_Hole_API.Models;
+using Word_Hole_API.Models.DB;
 
 namespace Word_Hole_API.Controllers
 {
@@ -28,7 +28,7 @@ namespace Word_Hole_API.Controllers
                     output.Add(new
                     {
                         id = post.Id,
-                        message = post.Message
+                        message = post.Post
                     });
                 }
 

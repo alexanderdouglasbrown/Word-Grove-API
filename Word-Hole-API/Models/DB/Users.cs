@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Word_Hole_API.Models
+namespace Word_Hole_API.Models.DB
 {
     public partial class Users
     {

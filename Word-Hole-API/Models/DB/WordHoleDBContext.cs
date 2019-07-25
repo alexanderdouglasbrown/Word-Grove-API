@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Word_Hole_API.Models
+namespace Word_Hole_API.Models.DB
 {
     public partial class WordHoleDBContext : DbContext
     {
@@ -18,17 +18,9 @@ namespace Word_Hole_API.Models
         public virtual DbSet<Posts> Posts { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable("DB_STRING"));
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity<Posts>(entity =>
             {
@@ -40,14 +32,15 @@ namespace Word_Hole_API.Models
                     .HasColumnName("createdon")
                     .HasDefaultValueSql("now()");
 
-                entity.Property(e => e.Message).HasColumnName("message");
+                entity.Property(e => e.Post)
+                    .IsRequired()
+                    .HasColumnName("post");
 
                 entity.Property(e => e.Userid).HasColumnName("userid");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.Userid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("posts_userid_fkey");
             });
 
@@ -66,17 +59,19 @@ namespace Word_Hole_API.Models
                     .HasDefaultValueSql("now()");
 
                 entity.Property(e => e.Hash)
+                    .IsRequired()
                     .HasColumnName("hash")
-                    .HasMaxLength(200);
+                    .HasMaxLength(32);
 
                 entity.Property(e => e.Salt)
+                    .IsRequired()
                     .HasColumnName("salt")
-                    .HasMaxLength(200);
+                    .HasMaxLength(32);
 
                 entity.Property(e => e.Username)
                     .IsRequired()
                     .HasColumnName("username")
-                    .HasMaxLength(200);
+                    .HasMaxLength(50);
             });
         }
     }
