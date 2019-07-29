@@ -54,6 +54,11 @@ namespace Word_Hole_API.Models.DB
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.Access)
+                    .IsRequired()
+                    .HasColumnName("access")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.Createdon)
                     .HasColumnName("createdon")
                     .HasDefaultValueSql("now()");
@@ -61,12 +66,7 @@ namespace Word_Hole_API.Models.DB
                 entity.Property(e => e.Hash)
                     .IsRequired()
                     .HasColumnName("hash")
-                    .HasMaxLength(32);
-
-                entity.Property(e => e.Salt)
-                    .IsRequired()
-                    .HasColumnName("salt")
-                    .HasMaxLength(32);
+                    .HasMaxLength(255);
 
                 entity.Property(e => e.Username)
                     .IsRequired()
