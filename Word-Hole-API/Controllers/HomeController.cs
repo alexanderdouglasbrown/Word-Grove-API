@@ -13,29 +13,37 @@ namespace Word_Hole_API.Controllers
     public class HomeController : ControllerBase
     {
         private readonly WordHoleDBContext _context;
+
         public HomeController(WordHoleDBContext context)
         {
             _context = context;
         }
-        [HttpGet]
-        public object Get()
+
+        [HttpGet("hi")]
+        public IActionResult SayHi()
         {
-            var query = (from posts in _context.Posts
-                         orderby posts.Createdon descending
-                         select posts);
-
-            var output = new List<object>();
-
-            foreach (var post in query)
-            {
-                output.Add(new
-                {
-                    id = post.Id,
-                    message = post.Post
-                });
-            }
-
-            return output;
+            return Ok();
         }
+
+        //[HttpGet]
+        //public object Get()
+        //{
+        //    var query = (from posts in _context.Posts
+        //                 orderby posts.Createdon descending
+        //                 select posts);
+
+        //    var output = new List<object>();
+
+        //    foreach (var post in query)
+        //    {
+        //        output.Add(new
+        //        {
+        //            id = post.Id,
+        //            message = post.Post
+        //        });
+        //    }
+
+        //    return output;
+        //}
     }
 }
