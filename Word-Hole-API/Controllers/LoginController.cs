@@ -24,7 +24,7 @@ namespace Word_Hole_API.Controllers
         }
 
         [HttpPost]
-        public IActionResult ProcessLogin([FromBody] LoginRegister userInfo)
+        public IActionResult ProcessLogin([FromBody] LoginRegisterBody userInfo)
         {
             var userData = GetUserFromDB(userInfo.Username);
 

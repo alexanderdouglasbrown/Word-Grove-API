@@ -23,7 +23,7 @@ namespace Word_Hole_API.Controllers
         }
 
         [HttpPost]
-        public IActionResult ProcessRegistration([FromBody] LoginRegister userInfo)
+        public IActionResult ProcessRegistration([FromBody] LoginRegisterBody userInfo)
         {
             if (userInfo.Password.Count() < 8)
             {
@@ -56,7 +56,7 @@ namespace Word_Hole_API.Controllers
             return query.Count() > 0;
         }
 
-        private bool AddUserToDB(LoginRegister userInfo)
+        private bool AddUserToDB(LoginRegisterBody userInfo)
         {
             //BCrypt bundles its salt in the hash
             var hash = BCrypt.Net.BCrypt.HashPassword(userInfo.Password);

@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace Word_Hole_API.Models
 {
-    public class LoginRegister
+    public class PostBody
     {
         [Required(AllowEmptyStrings = false)]
-        public string Username { get; set; }
-
-        [Required(AllowEmptyStrings =false)]
-        public string Password { get; set; }
+        public string Post { get; set; }
     }
 }
