@@ -28,6 +28,32 @@ namespace Word_Hole_API.Controllers
             return Ok();
         }
 
+        [HttpGet("posts")]
+        public IActionResult GetPosts()
+        {
+            var query = (from posts in _context.Posts
+                         join users in _context.Users on posts.Userid equals users.Id
+                         orderby posts.Createdon descending
+                         select new { posts, users }).Skip(0).Take(20).ToList();
+
+            var result = new List<object>();
+
+            foreach(var post in query)
+            {
+                var row = new
+                {
+                    id = post.posts.Id,
+                    post = post.posts.Post,
+                    date = post.posts.Createdon.ToString(),
+                    username = post.users.Username
+                };
+
+                result.Add(row);
+            }
+
+            return Ok(result);
+        }
+
         [Authorize]
         [HttpPost("post")]
         public IActionResult SubmitPost([FromBody] PostBody post)
