@@ -78,26 +78,5 @@ namespace Word_Hole_API.Controllers
             return Ok();
         }
 
-
-        //[HttpGet]
-        //public object Get()
-        //{
-        //    var query = (from posts in _context.Posts
-        //                 orderby posts.Createdon descending
-        //                 select posts);
-
-        //    var output = new List<object>();
-
-        //    foreach (var post in query)
-        //    {
-        //        output.Add(new
-        //        {
-        //            id = post.Id,
-        //            message = post.Post
-        //        });
-        //    }
-
-        //    return output;
-        //}
     }
 }
