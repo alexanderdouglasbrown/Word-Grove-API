@@ -22,10 +22,11 @@ namespace Word_Hole_API.Controllers
             _context = context;
         }
 
+        // Used for checking if the server is awake
         [HttpGet("hi")]
         public IActionResult SayHi()
         {
-            return Ok();
+            return Ok("Hi!");
         }
 
         [HttpGet("posts")]
@@ -34,7 +35,7 @@ namespace Word_Hole_API.Controllers
             var query = (from posts in _context.Posts
                          join users in _context.Users on posts.Userid equals users.Id
                          orderby posts.Createdon descending
-                         select new { posts, users }).Skip(0).Take(20).ToList();
+                         select new { posts, users }).ToList(); // TODO: Implement better scrolling. Use: .Skip(0).Take(20).
 
             var result = new List<object>();
 
