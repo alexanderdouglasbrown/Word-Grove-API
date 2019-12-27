@@ -15,12 +15,44 @@ namespace Word_Hole_API.Models.DB
         {
         }
 
+        public virtual DbSet<Comments> Comments { get; set; }
         public virtual DbSet<Posts> Posts { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
+
+            modelBuilder.Entity<Comments>(entity =>
+            {
+                entity.ToTable("comments");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Comment)
+                    .IsRequired()
+                    .HasColumnName("comment");
+
+                entity.Property(e => e.Createdon)
+                    .HasColumnName("createdon")
+                    .HasDefaultValueSql("now()");
+
+                entity.Property(e => e.Postid).HasColumnName("postid");
+
+                entity.Property(e => e.Userid).HasColumnName("userid");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.Postid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("comments_postid_fkey");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.Userid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("comments_userid_fkey");
+            });
 
             modelBuilder.Entity<Posts>(entity =>
             {
@@ -41,6 +73,7 @@ namespace Word_Hole_API.Models.DB
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.Userid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("posts_userid_fkey");
             });
 

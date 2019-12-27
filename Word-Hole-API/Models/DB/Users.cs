@@ -7,6 +7,7 @@ namespace Word_Hole_API.Models.DB
     {
         public Users()
         {
+            Comments = new HashSet<Comments>();
             Posts = new HashSet<Posts>();
         }
 
@@ -16,6 +17,7 @@ namespace Word_Hole_API.Models.DB
         public DateTime Createdon { get; set; }
         public string Access { get; set; }
 
+        public virtual ICollection<Comments> Comments { get; set; }
         public virtual ICollection<Posts> Posts { get; set; }
     }
 }
