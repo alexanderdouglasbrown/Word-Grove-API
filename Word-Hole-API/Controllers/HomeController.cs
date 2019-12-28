@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Word_Hole_API.Models;
+using Word_Hole_API.Models.Home;
 using Word_Hole_API.Models.DB;
 
 namespace Word_Hole_API.Controllers
@@ -57,7 +57,7 @@ namespace Word_Hole_API.Controllers
 
         [Authorize]
         [HttpPost("post")]
-        public IActionResult SubmitPost([FromBody] PostBody post)
+        public IActionResult SubmitPost([FromBody] PostPost post)
         {
             if (post.Post.Count() > _maxPostCharacterCount)
             {
@@ -68,7 +68,7 @@ namespace Word_Hole_API.Controllers
 
             var newPost = new Posts()
             {
-                Createdon = DateTime.UtcNow,
+                Createdon = DateTime.Now,
                 Userid = userID,
                 Post = post.Post
             };

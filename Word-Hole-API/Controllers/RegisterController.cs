@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Word_Hole_API.Models;
+using Word_Hole_API.Models.Register;
 using Word_Hole_API.Models.DB;
 
 namespace Word_Hole_API.Controllers
@@ -23,28 +23,24 @@ namespace Word_Hole_API.Controllers
         }
 
         [HttpPost]
-        public IActionResult ProcessRegistration([FromBody] LoginRegisterBody userInfo)
+        public IActionResult ProcessRegistration([FromBody] RegisterPost userInfo)
         {
+            if (userInfo.Password != userInfo.Confirm)
+                return BadRequest(new { error = "Passwords do not match" });
+
             if (userInfo.Password.Count() < 8)
-            {
-                return Ok(new { error = "Password must be at least 8 characters long" });
-            }
+                return BadRequest(new { error = "Password must be at least 8 characters long" });
 
             if (CheckUserAlreadyExists(userInfo.Username))
-            {
-                return Ok(new { error = "Username already in use" });
-            }
+                return BadRequest(new { error = "Username already in use" });
 
             if (!AddUserToDB(userInfo))
-            {
-                return Ok(new { error = "An error occurred while trying to register :(" });
-            }
-            else
-            {
-                // Success
-                var jwt = new JWT(_context, _config, userInfo.Username).GetToken();
-                return Ok(new { jwt });
-            }
+                return BadRequest(new { error = "An error occurred while trying to register :(" });
+
+            // Success
+            var jwt = new JWT(_context, _config, userInfo.Username).GetToken();
+            return Ok(new { jwt });
+
         }
 
         private bool CheckUserAlreadyExists(string username)
@@ -56,7 +52,7 @@ namespace Word_Hole_API.Controllers
             return query.Count() > 0;
         }
 
-        private bool AddUserToDB(LoginRegisterBody userInfo)
+        private bool AddUserToDB(RegisterPost userInfo)
         {
             //BCrypt bundles its salt in the hash
             var hash = BCrypt.Net.BCrypt.HashPassword(userInfo.Password);
@@ -73,7 +69,7 @@ namespace Word_Hole_API.Controllers
                 _context.Users.Add(newUser);
                 _context.SaveChanges();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return false;

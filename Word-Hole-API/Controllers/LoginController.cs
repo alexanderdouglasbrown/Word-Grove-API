@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Word_Hole_API.Models;
+using Word_Hole_API.Models.Login;
 using Word_Hole_API.Models.DB;
 
 namespace Word_Hole_API.Controllers
@@ -24,7 +24,7 @@ namespace Word_Hole_API.Controllers
         }
 
         [HttpPost]
-        public IActionResult ProcessLogin([FromBody] LoginRegisterBody userInfo)
+        public IActionResult ProcessLogin([FromBody] LoginPost userInfo)
         {
             var userData = GetUserFromDB(userInfo.Username);
 

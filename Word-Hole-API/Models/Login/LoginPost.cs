@@ -4,11 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Word_Hole_API.Models
+namespace Word_Hole_API.Models.Login
 {
-    public class PostBody
+    public class LoginPost
     {
         [Required(AllowEmptyStrings = false)]
-        public string Post { get; set; }
+        public string Username { get; set; }
+
+        [Required(AllowEmptyStrings =false)]
+        public string Password { get; set; }
     }
 }
