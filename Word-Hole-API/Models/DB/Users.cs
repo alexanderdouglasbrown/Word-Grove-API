@@ -8,6 +8,7 @@ namespace Word_Hole_API.Models.DB
         public Users()
         {
             Comments = new HashSet<Comments>();
+            Likes = new HashSet<Likes>();
             Posts = new HashSet<Posts>();
         }
 
@@ -18,6 +19,7 @@ namespace Word_Hole_API.Models.DB
         public string Access { get; set; }
 
         public virtual ICollection<Comments> Comments { get; set; }
+        public virtual ICollection<Likes> Likes { get; set; }
         public virtual ICollection<Posts> Posts { get; set; }
     }
 }

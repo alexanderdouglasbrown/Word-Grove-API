@@ -35,7 +35,8 @@ namespace Word_Hole_API.Controllers
             {
                 post = postQuery.posts.Post,
                 date = postQuery.posts.Createdon.ToString(),
-                username = postQuery.users.Username
+                username = postQuery.users.Username,
+                userID = postQuery.users.Id
             };
 
             var comments = (from cmts in _context.Comments

@@ -16,6 +16,7 @@ namespace Word_Hole_API.Models.DB
         }
 
         public virtual DbSet<Comments> Comments { get; set; }
+        public virtual DbSet<Likes> Likes { get; set; }
         public virtual DbSet<Posts> Posts { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
@@ -37,6 +38,8 @@ namespace Word_Hole_API.Models.DB
                     .HasColumnName("createdon")
                     .HasDefaultValueSql("now()");
 
+                entity.Property(e => e.Editdate).HasColumnName("editdate");
+
                 entity.Property(e => e.Postid).HasColumnName("postid");
 
                 entity.Property(e => e.Userid).HasColumnName("userid");
@@ -54,6 +57,30 @@ namespace Word_Hole_API.Models.DB
                     .HasConstraintName("comments_userid_fkey");
             });
 
+            modelBuilder.Entity<Likes>(entity =>
+            {
+                entity.HasKey(e => new { e.Userid, e.Postid })
+                    .HasName("likes_pkey");
+
+                entity.ToTable("likes");
+
+                entity.Property(e => e.Userid).HasColumnName("userid");
+
+                entity.Property(e => e.Postid).HasColumnName("postid");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.Likes)
+                    .HasForeignKey(d => d.Postid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("likes_postid_fkey");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Likes)
+                    .HasForeignKey(d => d.Userid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("likes_userid_fkey");
+            });
+
             modelBuilder.Entity<Posts>(entity =>
             {
                 entity.ToTable("posts");
@@ -63,6 +90,8 @@ namespace Word_Hole_API.Models.DB
                 entity.Property(e => e.Createdon)
                     .HasColumnName("createdon")
                     .HasDefaultValueSql("now()");
+
+                entity.Property(e => e.Editdate).HasColumnName("editdate");
 
                 entity.Property(e => e.Post)
                     .IsRequired()
