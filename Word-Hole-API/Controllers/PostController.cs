@@ -34,10 +34,14 @@ namespace Word_Hole_API.Controllers
             if (postQuery == null)
                 return BadRequest(new { error = "No post found" });
 
+            // 5 minute leeway before a post is considered edited
+            var isEdited = postQuery.posts.Editdate.HasValue && postQuery.posts.Editdate > postQuery.posts.Createdon.AddMinutes(5);
+
             var post = new
             {
                 post = postQuery.posts.Post,
                 date = postQuery.posts.Createdon.ToString(),
+                isEdited,
                 username = postQuery.users.Username,
                 userID = postQuery.users.Id
             };

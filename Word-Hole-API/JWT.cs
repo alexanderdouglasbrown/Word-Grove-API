@@ -51,7 +51,7 @@ namespace Word_Hole_API
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                 _config["Jwt:Issuer"],
                 claims,
-                expires: DateTime.UtcNow.AddHours(2),
+                expires: DateTime.Now.AddHours(8),
                 signingCredentials: creds);
 
             return $"Bearer {new JwtSecurityTokenHandler().WriteToken(token)}";
