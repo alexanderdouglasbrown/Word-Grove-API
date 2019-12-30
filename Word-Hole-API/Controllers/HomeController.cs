@@ -34,28 +34,14 @@ namespace Word_Hole_API.Controllers
         {
             int lastID = parameters.LastID ?? int.MaxValue;
 
-            var query = (from posts in _context.Posts
-                         join users in _context.Users on posts.Userid equals users.Id
+            var postIDs = (from posts in _context.Posts
                          where posts.Id < lastID
                          orderby posts.Id descending
-                         select new { posts, users }).Take(15).ToList();
+                         select posts.Id).Take(20).ToList();
 
             var result = new List<object>();
 
-            foreach(var post in query)
-            {
-                var row = new
-                {
-                    id = post.posts.Id,
-                    post = post.posts.Post,
-                    date = post.posts.Createdon.ToString(),
-                    username = post.users.Username
-                };
-
-                result.Add(row);
-            }
-
-            return Ok(result);
+            return Ok(postIDs);
         }
 
         [Authorize]

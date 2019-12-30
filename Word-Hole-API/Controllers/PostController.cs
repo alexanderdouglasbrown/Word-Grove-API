@@ -46,11 +46,7 @@ namespace Word_Hole_API.Controllers
                 userID = postQuery.users.Id
             };
 
-            var comments = (from cmts in _context.Comments
-                            where cmts.Postid == parameters.ID
-                            select cmts).ToList();
-
-            return Ok(new { post, comments });
+            return Ok(post);
         }
 
         [Authorize]
