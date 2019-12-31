@@ -8,8 +8,6 @@ namespace Word_Hole_API.Models.Like
 {
     public class LikesGet
     {
-        public int? UserID { get; set; }
-
         [Required]
         public int PostID { get; set; }
     }

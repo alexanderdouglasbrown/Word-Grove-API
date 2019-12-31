@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Word_Hole_API.Models.Like
 {
-    public class LikesPatch
+    public class LikesPut
     {
-        [Required]
-        public int UserID { get; set; }
-
         [Required]
         public int PostID { get; set; }
     }

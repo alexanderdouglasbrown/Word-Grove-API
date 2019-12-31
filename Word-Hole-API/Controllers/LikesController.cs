@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Word_Hole_API.Models.DB;
@@ -23,14 +24,27 @@ namespace Word_Hole_API.Controllers
         [HttpGet]
         public IActionResult GetPostLikes([FromQuery] LikesGet parameters)
         {
+            var userID = GetNullableUserID();
+
             var likesQuery = from likes in _context.Likes
                              where likes.Postid == parameters.PostID
                              select likes;
 
             var totalLikes = likesQuery.Count();
-            var userLiked = GetUserLikedPost(parameters.UserID, likesQuery);
+            var isUserLiked = GetUserLikedPost(userID, likesQuery);
 
-            return Ok(new { userLiked, totalLikes });
+            return Ok(new { isUserLiked, totalLikes });
+        }
+
+        private int? GetNullableUserID()
+        {
+            var userIDRaw = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserID");
+            int? result = null;
+
+            if (userIDRaw != null)
+                result = int.Parse(userIDRaw.Value);
+
+            return result;
         }
 
         private bool GetUserLikedPost(int? userID, IQueryable<Likes> likesQuery)
@@ -45,11 +59,14 @@ namespace Word_Hole_API.Controllers
             return getLike != null;
         }
 
+        [Authorize]
         [HttpPut]
-        public IActionResult AddLike(LikesPatch parameters)
+        public IActionResult AddLike(LikesPut parameters)
         {
+            var userID = int.Parse(HttpContext.User.Claims.Single(c => c.Type == "UserID").Value);
+
             var queryCheckAlreadyLiked = (from likes in _context.Likes
-                                          where likes.Userid == parameters.UserID
+                                          where likes.Userid == userID
                                           && likes.Postid == parameters.PostID
                                           select likes).FirstOrDefault();
 
@@ -58,7 +75,7 @@ namespace Word_Hole_API.Controllers
 
             var newLike = new Likes()
             {
-                Userid = parameters.UserID,
+                Userid = userID,
                 Postid = parameters.PostID
             };
 
@@ -68,11 +85,14 @@ namespace Word_Hole_API.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpDelete]
         public IActionResult RemoveLike(LikesDelete parameters)
         {
+            var userID = int.Parse(HttpContext.User.Claims.Single(c => c.Type == "UserID").Value);
+
             var like = (from likes in _context.Likes
-                             where likes.Userid == parameters.UserID
+                             where likes.Userid == userID
                              && likes.Postid == parameters.PostID
                              select likes).FirstOrDefault();
 
