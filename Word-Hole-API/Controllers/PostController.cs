@@ -26,6 +26,8 @@ namespace Word_Hole_API.Controllers
         [HttpGet]
         public IActionResult GetPost([FromQuery] PostGet parameters)
         {
+            var userID = GetNullableUserID();
+
             var postQuery = (from posts in _context.Posts
                              join users in _context.Users on posts.Userid equals users.Id
                              where posts.Id == parameters.ID
@@ -33,6 +35,17 @@ namespace Word_Hole_API.Controllers
 
             if (postQuery == null)
                 return BadRequest(new { notFound = true });
+
+            var likesQuery = from likes in _context.Likes
+                             where likes.Postid == parameters.ID
+                             select likes;
+
+            var isUserLiked = GetUserLikedPost(userID, likesQuery);
+            var totalLikes = likesQuery.Count();
+
+            var totalComments = (from comments in _context.Comments
+                                 where comments.Postid == parameters.ID
+                                 select comments).Count();
 
             // 5 minute leeway before a post is considered edited
             var isEdited = postQuery.posts.Editdate.HasValue && postQuery.posts.Editdate > postQuery.posts.Createdon.AddMinutes(5);
@@ -46,7 +59,30 @@ namespace Word_Hole_API.Controllers
                 userID = postQuery.users.Id
             };
 
-            return Ok(post);
+            return Ok(new { post, totalLikes, totalComments, isUserLiked });
+        }
+
+        private int? GetNullableUserID()
+        {
+            var userIDRaw = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserID");
+            int? result = null;
+
+            if (userIDRaw != null)
+                result = int.Parse(userIDRaw.Value);
+
+            return result;
+        }
+
+        private bool GetUserLikedPost(int? userID, IQueryable<Likes> likesQuery)
+        {
+            if (!userID.HasValue)
+                return false;
+
+            var getLike = (from likes in likesQuery
+                           where likes.Userid == userID
+                           select likes).FirstOrDefault();
+
+            return getLike != null;
         }
 
         [Authorize]

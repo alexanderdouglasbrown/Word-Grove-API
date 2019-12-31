@@ -21,44 +21,6 @@ namespace Word_Hole_API.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult GetPostLikes([FromQuery] LikesGet parameters)
-        {
-            var userID = GetNullableUserID();
-
-            var likesQuery = from likes in _context.Likes
-                             where likes.Postid == parameters.PostID
-                             select likes;
-
-            var totalLikes = likesQuery.Count();
-            var isUserLiked = GetUserLikedPost(userID, likesQuery);
-
-            return Ok(new { isUserLiked, totalLikes });
-        }
-
-        private int? GetNullableUserID()
-        {
-            var userIDRaw = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserID");
-            int? result = null;
-
-            if (userIDRaw != null)
-                result = int.Parse(userIDRaw.Value);
-
-            return result;
-        }
-
-        private bool GetUserLikedPost(int? userID, IQueryable<Likes> likesQuery)
-        {
-            if (!userID.HasValue)
-                return false;
-
-            var getLike = (from likes in likesQuery
-                           where likes.Userid == userID
-                           select likes).FirstOrDefault();
-
-            return getLike != null;
-        }
-
         [Authorize]
         [HttpPut]
         public IActionResult AddLike(LikesPut parameters)
