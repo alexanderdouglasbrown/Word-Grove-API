@@ -42,28 +42,12 @@ namespace Word_Hole_API.Controllers
 
         [HttpGet("posts")]
         public IActionResult GetUserPosts([FromQuery] UserPostsGet parameters) {
-            var query = (from posts in _context.Posts
-                         join users in _context.Users on posts.Userid equals users.Id
+            var postIDs = (from posts in _context.Posts
                          where posts.Userid == parameters.UserID
                          orderby posts.Id descending
-                         select new { posts, users });
+                         select posts.Id).ToList();
 
-            var result = new List<object>();
-
-            foreach (var post in query)
-            {
-                var row = new
-                {
-                    id = post.posts.Id,
-                    post = post.posts.Post,
-                    date = post.posts.Createdon.ToString(),
-                    username = post.users.Username // ¯\_(ツ)_/¯
-                };
-
-                result.Add(row);
-            }
-
-            return Ok(result);
+            return Ok(postIDs);
         }
     }
 }

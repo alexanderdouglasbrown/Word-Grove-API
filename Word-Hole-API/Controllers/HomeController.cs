@@ -39,8 +39,6 @@ namespace Word_Hole_API.Controllers
                          orderby posts.Id descending
                          select posts.Id).Take(20).ToList();
 
-            var result = new List<object>();
-
             return Ok(postIDs);
         }
 
