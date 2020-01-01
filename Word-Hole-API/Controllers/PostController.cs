@@ -53,7 +53,7 @@ namespace Word_Hole_API.Controllers
             var post = new
             {
                 post = postQuery.posts.Post,
-                date = postQuery.posts.Createdon.ToString(),
+                date = postQuery.posts.Createdon.ToString("dddd, MMM dd, yyyy hh:mm tt"),
                 isEdited,
                 username = postQuery.users.Username,
                 userID = postQuery.users.Id
