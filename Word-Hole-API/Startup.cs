@@ -62,7 +62,7 @@ namespace Word_Hole_API
                 app.UseHsts();
             }
             app.UseAuthentication();
-            app.UseCors(builder => builder.WithOrigins(Environment.GetEnvironmentVariable("CORS_ORIGIN")));
+            app.UseCors();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
