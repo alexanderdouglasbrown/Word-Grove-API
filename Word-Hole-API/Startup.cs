@@ -66,6 +66,7 @@ namespace Word_Hole_API
             {
                 builder.WithOrigins(Environment.GetEnvironmentVariable("CORS_ORIGIN"));
                 builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
             });
             app.UseHttpsRedirection();
             app.UseMvc();
