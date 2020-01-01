@@ -41,7 +41,7 @@ namespace Word_Hole_API.Controllers
         }
 
         [HttpGet("posts")]
-        public IActionResult GetUserPosts([FromQuery] UserPostsGet parameters) {
+        public IActionResult GetUserPostIDs([FromQuery] UserPostsGet parameters) {
             var postIDs = (from posts in _context.Posts
                          where posts.Userid == parameters.UserID
                          orderby posts.Id descending

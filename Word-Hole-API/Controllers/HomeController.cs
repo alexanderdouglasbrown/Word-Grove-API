@@ -30,7 +30,7 @@ namespace Word_Hole_API.Controllers
         }
 
         [HttpGet("posts")]
-        public IActionResult GetPosts([FromQuery] PostsGet parameters)
+        public IActionResult GetPostIDs([FromQuery] PostsGet parameters)
         {
             int lastID = parameters.LastID ?? int.MaxValue;
 
