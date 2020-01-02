@@ -22,13 +22,6 @@ namespace Word_Hole_API.Controllers
             _context = context;
         }
 
-        // Used for checking if the server is awake
-        [HttpGet("hi")]
-        public IActionResult SayHi()
-        {
-            return Ok("Hi!");
-        }
-
         [HttpGet("posts")]
         public IActionResult GetPostIDs([FromQuery] PostsGet parameters)
         {
