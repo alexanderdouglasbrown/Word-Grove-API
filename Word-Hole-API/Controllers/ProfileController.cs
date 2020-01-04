@@ -24,7 +24,7 @@ namespace Word_Hole_API.Controllers
         public IActionResult GetUser([FromQuery] UserGet parameters)
         {
             var user = (from users in _context.Users
-                        where users.Username == parameters.Username
+                        where users.Username.ToUpper().Trim() == parameters.Username.ToUpper().Trim()
                         select users).FirstOrDefault();
 
             if (user == null)

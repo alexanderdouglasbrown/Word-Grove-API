@@ -31,7 +31,7 @@ namespace Word_Hole_API.Controllers
             if (userInfo.Password.Count() < 8)
                 return BadRequest(new { error = "Password must be at least 8 characters long" });
 
-            if (CheckUserAlreadyExists(userInfo.Username))
+            if (CheckUserAlreadyExists(userInfo.Username.Trim()))
                 return BadRequest(new { error = "Username already in use" });
 
             if (!AddUserToDB(userInfo))
@@ -59,7 +59,7 @@ namespace Word_Hole_API.Controllers
 
             var newUser = new Users
             {
-                Username = userInfo.Username,
+                Username = userInfo.Username.Trim(),
                 Hash = hash,
                 Access = "User"
             };
