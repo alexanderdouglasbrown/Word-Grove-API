@@ -30,7 +30,7 @@ namespace Word_Hole_API.Controllers
             var postIDs = (from posts in _context.Posts
                          where posts.Id < lastID
                          orderby posts.Id descending
-                         select posts.Id).Take(20).ToList();
+                         select posts.Id).Take(15).ToList();
 
             return Ok(postIDs);
         }
