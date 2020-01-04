@@ -48,7 +48,7 @@ namespace Word_Hole_API.Controllers
             var comment = new
             {
                 comment = commentQuery.comments.Comment,
-                date = commentQuery.comments.Createdon.ToString("dddd, MMM dd, yyyy hh:mm tt"),
+                date = Common.GetPSTTimeString(commentQuery.comments.Createdon),
                 isEdited,
                 username = commentQuery.users.Username,
                 userID = commentQuery.users.Id
