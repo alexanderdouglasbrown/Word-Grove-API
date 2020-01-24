@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Word_Hole_API.Models.DB;
 using Word_Hole_API.Models.Post;
 
@@ -28,12 +29,11 @@ namespace Word_Hole_API.Controllers
         {
             var userID = GetNullableUserID();
 
-            var postQuery = (from posts in _context.Posts
-                             join users in _context.Users on posts.Userid equals users.Id
+            var post = (from posts in _context.Posts
                              where posts.Id == parameters.ID
-                             select new { posts, users }).FirstOrDefault();
+                             select posts).Include(x=>x.User).FirstOrDefault();
 
-            if (postQuery == null)
+            if (post == null)
                 return BadRequest(new { notFound = true });
 
             var likesQuery = from likes in _context.Likes
@@ -48,18 +48,18 @@ namespace Word_Hole_API.Controllers
                                  select comments).Count();
 
             // 5 minute leeway before a post is considered edited
-            var isEdited = postQuery.posts.Editdate.HasValue && postQuery.posts.Editdate > postQuery.posts.Createdon.AddMinutes(5);
+            var isEdited = post.Editdate.HasValue && post.Editdate > post.Createdon.AddMinutes(5);
 
-            var post = new
+            var postData = new
             {
-                post = postQuery.posts.Post,
-                date = Common.GetPSTTimeString(postQuery.posts.Createdon),
+                post = post.Post,
+                date = Common.GetPSTTimeString(post.Createdon),
                 isEdited,
-                username = postQuery.users.Username,
-                userID = postQuery.users.Id
+                username = post.User.Username,
+                userID = post.User.Id
             };
 
-            return Ok(new { post, totalLikes, totalComments, isUserLiked });
+            return Ok(new { post = postData, totalLikes, totalComments, isUserLiked });
         }
 
         private int? GetNullableUserID()

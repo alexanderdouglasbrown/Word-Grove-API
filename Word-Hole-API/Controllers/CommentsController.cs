@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Word_Hole_API.Models.Comments;
 using Word_Hole_API.Models.DB;
 
@@ -36,25 +37,23 @@ namespace Word_Hole_API.Controllers
         [HttpGet]
         public IActionResult GetComment([FromQuery] CommentGet parameters)
         {
-            var commentQuery = (from comments in _context.Comments
-                                join users in _context.Users on comments.Userid equals users.Id
-                                where comments.Id == parameters.CommentID
-                                select new { comments, users }).Single();
+            var comment = (from comments in _context.Comments
+                           where comments.Id == parameters.CommentID
+                           select comments).Include(x => x.User).Single();
 
             // 5 minute leeway before a comment is considered edited
-            var isEdited = commentQuery.comments.Editdate.HasValue && commentQuery.comments.Editdate > commentQuery.comments.Createdon.AddMinutes(5);
+            var isEdited = comment.Editdate.HasValue && comment.Editdate > comment.Createdon.AddMinutes(5);
 
-
-            var comment = new
+            var commentData = new
             {
-                comment = commentQuery.comments.Comment,
-                date = Common.GetPSTTimeString(commentQuery.comments.Createdon),
+                comment = comment.Comment,
+                date = Common.GetPSTTimeString(comment.Createdon),
                 isEdited,
-                username = commentQuery.users.Username,
-                userID = commentQuery.users.Id
+                username = comment.User.Username,
+                userID = comment.User.Id
             };
 
-            return Ok(comment);
+            return Ok(commentData);
         }
 
         [Authorize]

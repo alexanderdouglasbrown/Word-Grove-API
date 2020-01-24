@@ -28,9 +28,9 @@ namespace Word_Hole_API.Controllers
             int lastID = parameters.LastID ?? int.MaxValue;
 
             var postIDs = (from posts in _context.Posts
-                         where posts.Id < lastID
-                         orderby posts.Id descending
-                         select posts.Id).Take(20).ToList();
+                           where posts.Id < lastID
+                           orderby posts.Id descending
+                           select posts.Id).Take(20).ToList();
 
             return Ok(postIDs);
         }
