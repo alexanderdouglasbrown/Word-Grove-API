@@ -30,7 +30,7 @@ namespace Word_Hole_API.Controllers
 
             if (userData == null || !BCrypt.Net.BCrypt.Verify(userInfo.Password, userData.Hash))
             {
-                return Ok(new { error = "Incorrect username or password" });
+                return BadRequest(new { error = "Incorrect username or password" });
             }
 
             // Success

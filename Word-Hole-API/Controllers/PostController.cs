@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Word_Hole_API.Models.DB;
 using Word_Hole_API.Models.Post;
+using Word_Hole_API.Shared;
 
 namespace Word_Hole_API.Controllers
 {
@@ -89,14 +90,14 @@ namespace Word_Hole_API.Controllers
         [HttpPatch]
         public IActionResult EditPost(PostPatch parameters)
         {
-            var userID = int.Parse(HttpContext.User.Claims.Single(c => c.Type == "UserID").Value);
-            var role = HttpContext.User.Claims.Single(c => c.Type == ClaimTypes.Role).Value;
+            var userID = JWTUtility.GetUserID(HttpContext);
+            var role = JWTUtility.GetRole(HttpContext);
 
             var post = (from posts in _context.Posts
                         where posts.Id == parameters.ID
                         select posts).Single();
 
-            if (role != "Admin" && post.Userid != userID)
+            if (role != RoleType.Admin && post.Userid != userID)
                 return BadRequest(new { error = "You do not have permission to edit this post" });
 
             if (parameters.Post.Count() > _maxPostCharacterCount)
@@ -114,14 +115,14 @@ namespace Word_Hole_API.Controllers
         [HttpDelete]
         public IActionResult DeletePost(PostDelete parameters)
         {
-            var userID = int.Parse(HttpContext.User.Claims.Single(c => c.Type == "UserID").Value);
-            var role = HttpContext.User.Claims.Single(c => c.Type == ClaimTypes.Role).Value;
+            var userID = JWTUtility.GetUserID(HttpContext);
+            var role = JWTUtility.GetRole(HttpContext);
 
             var post = (from posts in _context.Posts
                         where posts.Id == parameters.ID
                         select posts).Single();
 
-            if (role != "Admin" && post.Userid != userID)
+            if (role != RoleType.Admin && post.Userid != userID)
                 return BadRequest(new { error = "You do not have permission to delete this post" });
 
             var comments = from cmts in _context.Comments

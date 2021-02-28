@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Word_Hole_API.Models.DB;
 using Word_Hole_API.Models.Like;
+using Word_Hole_API.Shared;
 
 namespace Word_Hole_API.Controllers
 {
@@ -25,7 +26,7 @@ namespace Word_Hole_API.Controllers
         [HttpPut]
         public IActionResult AddLike(LikesPut parameters)
         {
-            var userID = int.Parse(HttpContext.User.Claims.Single(c => c.Type == "UserID").Value);
+            var userID = JWTUtility.GetUserID(HttpContext);
 
             var queryCheckAlreadyLiked = (from likes in _context.Likes
                                           where likes.Userid == userID
@@ -51,7 +52,7 @@ namespace Word_Hole_API.Controllers
         [HttpDelete]
         public IActionResult RemoveLike(LikesDelete parameters)
         {
-            var userID = int.Parse(HttpContext.User.Claims.Single(c => c.Type == "UserID").Value);
+            var userID = JWTUtility.GetUserID(HttpContext);
 
             var like = (from likes in _context.Likes
                              where likes.Userid == userID

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Word_Hole_API.Models.Home;
 using Word_Hole_API.Models.DB;
+using Word_Hole_API.Shared;
 
 namespace Word_Hole_API.Controllers
 {
@@ -44,7 +45,7 @@ namespace Word_Hole_API.Controllers
                 return BadRequest();
             }
 
-            var userID = int.Parse(HttpContext.User.Claims.Single(c => c.Type == "UserID").Value);
+            var userID = JWTUtility.GetUserID(HttpContext);
 
             var newPost = new Posts()
             {

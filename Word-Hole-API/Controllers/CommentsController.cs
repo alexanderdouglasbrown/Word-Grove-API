@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Word_Hole_API.Models.Comments;
 using Word_Hole_API.Models.DB;
+using Word_Hole_API.Shared;
 
 namespace Word_Hole_API.Controllers
 {
@@ -60,7 +61,7 @@ namespace Word_Hole_API.Controllers
         [HttpPost]
         public IActionResult PostComment(CommentPost parameters)
         {
-            var userID = int.Parse(HttpContext.User.Claims.Single(c => c.Type == "UserID").Value);
+            var userID = JWTUtility.GetUserID(HttpContext);
 
             var comment = new Comments
             {
@@ -80,14 +81,14 @@ namespace Word_Hole_API.Controllers
         [HttpPatch]
         public IActionResult EditComment(CommentEditPatch parameters)
         {
-            var userID = int.Parse(HttpContext.User.Claims.Single(c => c.Type == "UserID").Value);
-            var role = HttpContext.User.Claims.Single(c => c.Type == ClaimTypes.Role).Value;
+            var userID = JWTUtility.GetUserID(HttpContext);
+            var role = JWTUtility.GetRole(HttpContext);
 
             var comment = (from comments in _context.Comments
                            where comments.Id == parameters.CommentID
                            select comments).Single();
 
-            if (role != "Admin" && comment.Userid != userID)
+            if (role != RoleType.Admin && comment.Userid != userID)
                 return BadRequest(new { error = "You do not have permission to edit this post" });
 
             comment.Editdate = DateTime.Now;
@@ -102,14 +103,14 @@ namespace Word_Hole_API.Controllers
         [HttpDelete]
         public IActionResult DeleteComment(CommentDelete parameters)
         {
-            var userID = int.Parse(HttpContext.User.Claims.Single(c => c.Type == "UserID").Value);
-            var role = HttpContext.User.Claims.Single(c => c.Type == ClaimTypes.Role).Value;
+            var userID = JWTUtility.GetUserID(HttpContext);
+            var role = JWTUtility.GetRole(HttpContext);
 
             var comment = (from comments in _context.Comments
                            where comments.Id == parameters.CommentID
                            select comments).Single();
 
-            if (role != "Admin" && comment.Userid != userID)
+            if (role != RoleType.Admin && comment.Userid != userID)
                 return BadRequest(new { error = "You do not have permission to delete this post" });
 
             _context.Comments.Remove(comment);
