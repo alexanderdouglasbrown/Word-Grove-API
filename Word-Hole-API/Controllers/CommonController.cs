@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Word_Hole_API.Models.DB;
 
 namespace Word_Hole_API.Controllers
 {
@@ -11,9 +13,17 @@ namespace Word_Hole_API.Controllers
     [ApiController]
     public class CommonController : ControllerBase
     {
+        private readonly WordHoleDBContext _context;
+
+        public CommonController(WordHoleDBContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet("hello")]
         public IActionResult GetHi()
         {
+            _context.Database.OpenConnection();
             return Ok("Hi");
         }
     }
