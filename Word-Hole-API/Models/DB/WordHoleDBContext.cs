@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -22,8 +23,6 @@ namespace Word_Hole_API.Models.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
-
             modelBuilder.Entity<Comments>(entity =>
             {
                 entity.ToTable("comments");
@@ -35,10 +34,13 @@ namespace Word_Hole_API.Models.DB
                     .HasColumnName("comment");
 
                 entity.Property(e => e.Createdon)
+                    .HasColumnType("timestamp without time zone")
                     .HasColumnName("createdon")
                     .HasDefaultValueSql("now()");
 
-                entity.Property(e => e.Editdate).HasColumnName("editdate");
+                entity.Property(e => e.Editdate)
+                    .HasColumnType("timestamp without time zone")
+                    .HasColumnName("editdate");
 
                 entity.Property(e => e.Postid).HasColumnName("postid");
 
@@ -68,6 +70,10 @@ namespace Word_Hole_API.Models.DB
 
                 entity.Property(e => e.Postid).HasColumnName("postid");
 
+                entity.Property(e => e.Hax)
+                    .HasColumnType("bit(1)")
+                    .HasColumnName("hax");
+
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.Likes)
                     .HasForeignKey(d => d.Postid)
@@ -88,10 +94,13 @@ namespace Word_Hole_API.Models.DB
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Createdon)
+                    .HasColumnType("timestamp without time zone")
                     .HasColumnName("createdon")
                     .HasDefaultValueSql("now()");
 
-                entity.Property(e => e.Editdate).HasColumnName("editdate");
+                entity.Property(e => e.Editdate)
+                    .HasColumnType("timestamp without time zone")
+                    .HasColumnName("editdate");
 
                 entity.Property(e => e.Post)
                     .IsRequired()
@@ -110,31 +119,35 @@ namespace Word_Hole_API.Models.DB
             {
                 entity.ToTable("users");
 
-                entity.HasIndex(e => e.Username)
-                    .HasName("users_username_key")
+                entity.HasIndex(e => e.Username, "users_username_key")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Access)
                     .IsRequired()
-                    .HasColumnName("access")
-                    .HasMaxLength(50);
+                    .HasMaxLength(50)
+                    .HasColumnName("access");
 
                 entity.Property(e => e.Createdon)
+                    .HasColumnType("timestamp without time zone")
                     .HasColumnName("createdon")
                     .HasDefaultValueSql("now()");
 
                 entity.Property(e => e.Hash)
                     .IsRequired()
-                    .HasColumnName("hash")
-                    .HasMaxLength(255);
+                    .HasMaxLength(255)
+                    .HasColumnName("hash");
 
                 entity.Property(e => e.Username)
                     .IsRequired()
-                    .HasColumnName("username")
-                    .HasMaxLength(50);
+                    .HasMaxLength(50)
+                    .HasColumnName("username");
             });
+
+            OnModelCreatingPartial(modelBuilder);
         }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

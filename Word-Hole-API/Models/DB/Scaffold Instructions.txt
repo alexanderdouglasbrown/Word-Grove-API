@@ -1,7 +1,3 @@
 Use this command in NuGet Console:
 
-Scaffold-DbContext "Host=[Host];Database=[Database];Username=[Username];Password=[Password];Trust Server Certificate=true;SSL Mode=Prefer" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir Models/DB -Force
-
-Delete the old WordHoleDBContext, and rename the new context to that
-
-Delete the OnConfiguring fuction in the Context.
+Scaffold-DbContext "Host=[Host];Database=[Database];Username=[Username];Password=[Password];Trust Server Certificate=true;SSL Mode=Prefer" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir Models/DB -Context WordHoleDBContext -NoOnConfiguring -NoPluralize -Force
