@@ -47,7 +47,13 @@ namespace Word_Hole_API
                 };
             });
             services.AddDbContext<WordHoleDBContext>(options => options.UseNpgsql(Environment.GetEnvironmentVariable("DB_STRING")));
-            services.AddCors();
+            services.AddCors(options =>
+            options.AddPolicy("GitHub Frontend", builder =>
+            builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+            ));
             services.AddAuthorization();
         }
 
@@ -60,12 +66,7 @@ namespace Word_Hole_API
             }
 
             app.UseAuthentication();
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyOrigin();
-                builder.AllowAnyHeader();
-                builder.AllowAnyMethod();
-            });
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
