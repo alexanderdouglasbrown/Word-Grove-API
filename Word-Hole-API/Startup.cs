@@ -31,6 +31,8 @@ namespace Word_Hole_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddControllers();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -47,13 +49,6 @@ namespace Word_Hole_API
                 };
             });
             services.AddDbContext<WordHoleDBContext>(options => options.UseNpgsql(Environment.GetEnvironmentVariable("DB_STRING")));
-            services.AddCors(options =>
-            options.AddPolicy("GitHub Frontend", builder =>
-            builder
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod()
-            ));
             services.AddAuthorization();
         }
 
@@ -64,6 +59,13 @@ namespace Word_Hole_API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins(Environment.GetEnvironmentVariable("CORS_FRONTEND_URL"));
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+            });
 
             app.UseAuthentication();
 
