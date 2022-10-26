@@ -46,7 +46,11 @@ namespace Word_Hole_API
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET")))
                 };
             });
-            services.AddDbContext<WordHoleDBContext>(options => options.UseNpgsql(Environment.GetEnvironmentVariable("DB_STRING")));
+
+            var herokuDBURL = Environment.GetEnvironmentVariable("DATABASE_URL");
+            var dbString = HerokuDBStringConverter.GetDBString(herokuDBURL);
+            services.AddDbContext<WordHoleDBContext>(options => options.UseNpgsql(dbString));
+
             services.AddAuthorization();
             services.AddCors();
         }
