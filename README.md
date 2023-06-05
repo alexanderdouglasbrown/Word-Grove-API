@@ -1,1 +1,3 @@
-# Word-Hole-API
+# Word-Grove-API
+
+The backend for wordgrove.net
