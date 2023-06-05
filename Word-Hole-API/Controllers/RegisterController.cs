@@ -14,9 +14,9 @@ namespace Word_Hole_API.Controllers
     [ApiController]
     public class RegisterController : ControllerBase
     {
-        private readonly WordHoleDBContext _context;
+        private readonly WordGroveDBContext _context;
         private readonly IConfiguration _config;
-        public RegisterController(WordHoleDBContext context, IConfiguration config)
+        public RegisterController(WordGroveDBContext context, IConfiguration config)
         {
             _context = context;
             _config = config;

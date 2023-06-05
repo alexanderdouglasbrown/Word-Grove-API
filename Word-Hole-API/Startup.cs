@@ -49,7 +49,7 @@ namespace Word_Hole_API
 
             var herokuDBURL = Environment.GetEnvironmentVariable("DATABASE_URL");
             var dbString = HerokuDBStringConverter.GetDBString(herokuDBURL);
-            services.AddDbContext<WordHoleDBContext>(options => options.UseNpgsql(dbString));
+            services.AddDbContext<WordGroveDBContext>(options => options.UseNpgsql(dbString));
 
             services.AddAuthorization();
             services.AddCors();

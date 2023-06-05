@@ -17,9 +17,9 @@ namespace Word_Hole_API.Controllers
     [ApiController]
     public class CommentsController : ControllerBase
     {
-        private readonly WordHoleDBContext _context;
+        private readonly WordGroveDBContext _context;
 
-        public CommentsController(WordHoleDBContext context)
+        public CommentsController(WordGroveDBContext context)
         {
             _context = context;
         }

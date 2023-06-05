@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Word_Hole_API.Models.DB
 {
-    public partial class WordHoleDBContext : DbContext
+    public partial class WordGroveDBContext : DbContext
     {
-        public WordHoleDBContext()
+        public WordGroveDBContext()
         {
         }
 
-        public WordHoleDBContext(DbContextOptions<WordHoleDBContext> options)
+        public WordGroveDBContext(DbContextOptions<WordGroveDBContext> options)
             : base(options)
         {
         }
@@ -23,6 +23,8 @@ namespace Word_Hole_API.Models.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasPostgresExtension("heroku_ext", "pg_stat_statements");
+
             modelBuilder.Entity<Comments>(entity =>
             {
                 entity.ToTable("comments");

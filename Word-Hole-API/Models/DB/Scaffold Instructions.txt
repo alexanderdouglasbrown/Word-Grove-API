@@ -1,3 +1,3 @@
 Use this command in NuGet Console:
 
-Scaffold-DbContext "Host=[Host];Database=[Database];Username=[Username];Password=[Password];Trust Server Certificate=true;SSL Mode=Prefer" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir Models/DB -Context WordHoleDBContext -NoOnConfiguring -NoPluralize -Force
+Scaffold-DbContext "Host=[Host];Database=[Database];Username=[Username];Password=[Password];Trust Server Certificate=true;SSL Mode=Prefer" Npgsql.EntityFrameworkCore.PostgreSQL -OutputDir Models/DB -Context WordGroveDBContext -NoOnConfiguring -NoPluralize -Force

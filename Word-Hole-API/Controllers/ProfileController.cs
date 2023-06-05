@@ -13,9 +13,9 @@ namespace Word_Hole_API.Controllers
     [ApiController]
     public class ProfileController : ControllerBase
     {
-        private readonly WordHoleDBContext _context;
+        private readonly WordGroveDBContext _context;
 
-        public ProfileController(WordHoleDBContext context)
+        public ProfileController(WordGroveDBContext context)
         {
             _context = context;
         }

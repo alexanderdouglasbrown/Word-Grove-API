@@ -13,12 +13,12 @@ namespace Word_Hole_API
 {
     public class JWT
     {
-        private readonly WordHoleDBContext _context;
+        private readonly WordGroveDBContext _context;
         private readonly IConfiguration _config;
 
         private readonly string _token = null;
 
-        public JWT(WordHoleDBContext context, IConfiguration config, string username)
+        public JWT(WordGroveDBContext context, IConfiguration config, string username)
         {
             _context = context;
             _config = config;

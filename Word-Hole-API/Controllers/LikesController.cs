@@ -15,9 +15,9 @@ namespace Word_Hole_API.Controllers
     [ApiController]
     public class LikesController : ControllerBase
     {
-        private readonly WordHoleDBContext _context;
+        private readonly WordGroveDBContext _context;
 
-        public LikesController(WordHoleDBContext context)
+        public LikesController(WordGroveDBContext context)
         {
             _context = context;
         }

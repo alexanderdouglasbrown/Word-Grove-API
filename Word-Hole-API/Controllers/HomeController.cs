@@ -15,10 +15,10 @@ namespace Word_Hole_API.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        private readonly WordHoleDBContext _context;
+        private readonly WordGroveDBContext _context;
         private const int _maxPostCharacterCount = 512;
 
-        public HomeController(WordHoleDBContext context)
+        public HomeController(WordGroveDBContext context)
         {
             _context = context;
         }
