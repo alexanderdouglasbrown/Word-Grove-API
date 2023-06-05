@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Word_Hole_API.Models.DB;
-using Word_Hole_API.Models.Like;
-using Word_Hole_API.Shared;
+using Word_Grove_API.Models.DB;
+using Word_Grove_API.Models.Like;
+using Word_Grove_API.Shared;
 
-namespace Word_Hole_API.Controllers
+namespace Word_Grove_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

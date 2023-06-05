@@ -7,9 +7,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Word_Hole_API.Models.DB;
+using Word_Grove_API.Models.DB;
 
-namespace Word_Hole_API
+namespace Word_Grove_API
 {
     public class JWT
     {

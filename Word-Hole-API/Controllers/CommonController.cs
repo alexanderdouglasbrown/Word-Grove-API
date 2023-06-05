@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Word_Hole_API.Models.DB;
+using Word_Grove_API.Models.DB;
 
-namespace Word_Hole_API.Controllers
+namespace Word_Grove_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

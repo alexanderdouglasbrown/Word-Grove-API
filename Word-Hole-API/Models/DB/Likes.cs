@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 
-namespace Word_Hole_API.Models.DB
+namespace Word_Grove_API.Models.DB
 {
     public partial class Likes
     {

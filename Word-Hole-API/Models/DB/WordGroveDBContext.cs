@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Word_Hole_API.Models.DB
+namespace Word_Grove_API.Models.DB
 {
     public partial class WordGroveDBContext : DbContext
     {

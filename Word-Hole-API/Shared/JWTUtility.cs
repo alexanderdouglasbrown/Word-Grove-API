@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Word_Hole_API.Shared
+namespace Word_Grove_API.Shared
 {
     public static class JWTUtility
     {

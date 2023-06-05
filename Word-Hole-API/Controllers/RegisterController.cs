@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Word_Hole_API.Models.Register;
-using Word_Hole_API.Models.DB;
+using Word_Grove_API.Models.Register;
+using Word_Grove_API.Models.DB;
 
-namespace Word_Hole_API.Controllers
+namespace Word_Grove_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

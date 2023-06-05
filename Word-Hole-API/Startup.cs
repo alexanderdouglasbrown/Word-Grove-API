@@ -15,9 +15,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Word_Hole_API.Models.DB;
+using Word_Grove_API.Models.DB;
 
-namespace Word_Hole_API
+namespace Word_Grove_API
 {
     public class Startup
     {
