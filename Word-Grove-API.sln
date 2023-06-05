@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Word-Grove-API", "Word-Hole-API\Word-Grove-API.csproj", "{65808341-D5BC-4EE5-A8D3-48D3B65A8C7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Word-Grove-API", "Word-Grove-API\Word-Grove-API.csproj", "{65808341-D5BC-4EE5-A8D3-48D3B65A8C7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
