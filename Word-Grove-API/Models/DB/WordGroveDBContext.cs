@@ -23,8 +23,6 @@ namespace Word_Grove_API.Models.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasPostgresExtension("heroku_ext", "pg_stat_statements");
-
             modelBuilder.Entity<Comments>(entity =>
             {
                 entity.ToTable("comments");
@@ -103,6 +101,10 @@ namespace Word_Grove_API.Models.DB
                 entity.Property(e => e.Editdate)
                     .HasColumnType("timestamp without time zone")
                     .HasColumnName("editdate");
+
+                entity.Property(e => e.Imageurl)
+                    .HasMaxLength(255)
+                    .HasColumnName("imageurl");
 
                 entity.Property(e => e.Post)
                     .IsRequired()

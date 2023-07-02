@@ -16,6 +16,7 @@ namespace Word_Grove_API.Models.DB
         public string Post { get; set; }
         public DateTime Createdon { get; set; }
         public DateTime? Editdate { get; set; }
+        public string Imageurl { get; set; }
 
         public virtual Users User { get; set; }
         public virtual ICollection<Comments> Comments { get; set; }
