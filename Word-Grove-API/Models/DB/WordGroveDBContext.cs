@@ -103,7 +103,7 @@ namespace Word_Grove_API.Models.DB
                     .HasColumnName("editdate");
 
                 entity.Property(e => e.Imageurl)
-                    .HasMaxLength(255)
+                    .HasMaxLength(2048)
                     .HasColumnName("imageurl");
 
                 entity.Property(e => e.Post)
