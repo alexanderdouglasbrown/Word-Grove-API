@@ -40,7 +40,7 @@ namespace Word_Grove_API.Controllers
         [HttpPost("post")]
         public IActionResult SubmitPost([FromBody] PostPost post)
         {
-            if (post.Post.Count() > _maxPostCharacterCount)
+            if (post.Post.Length > _maxPostCharacterCount)
             {
                 return BadRequest();
             }
@@ -51,7 +51,8 @@ namespace Word_Grove_API.Controllers
             {
                 Createdon = DateTime.Now,
                 Userid = userID,
-                Post = post.Post
+                Post = post.Post,
+                Imageurl = post.ImageURL
             };
 
             _context.Posts.Add(newPost);

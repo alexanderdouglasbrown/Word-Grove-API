@@ -54,6 +54,7 @@ namespace Word_Grove_API.Controllers
             var postData = new
             {
                 post = post.Post,
+                imageURL = post.Imageurl,
                 date = Common.GetPSTTimeString(post.Createdon),
                 isEdited,
                 username = post.User.Username,
@@ -74,7 +75,7 @@ namespace Word_Grove_API.Controllers
             return result;
         }
 
-        private bool GetUserLikedPost(int? userID, IQueryable<Likes> likesQuery)
+        private static bool GetUserLikedPost(int? userID, IQueryable<Likes> likesQuery)
         {
             if (!userID.HasValue)
                 return false;
@@ -100,11 +101,12 @@ namespace Word_Grove_API.Controllers
             if (role != RoleType.Admin && post.Userid != userID)
                 return BadRequest(new { error = "You do not have permission to edit this post" });
 
-            if (parameters.Post.Count() > _maxPostCharacterCount)
+            if (parameters.Post.Length > _maxPostCharacterCount)
                 return BadRequest(new { error = "Your post has too many characters" });
 
             post.Editdate = DateTime.Now;
             post.Post = parameters.Post;
+            post.Imageurl = parameters.ImageURL;
 
             _context.SaveChanges();
 

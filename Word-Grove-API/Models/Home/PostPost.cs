@@ -10,5 +10,7 @@ namespace Word_Grove_API.Models.Home
     {
         [Required(AllowEmptyStrings = false)]
         public string Post { get; set; }
+
+        public string ImageURL { get; set; }
     }
 }

@@ -13,5 +13,7 @@ namespace Word_Grove_API.Models.Post
 
         [Required(AllowEmptyStrings = false)]
         public string Post { get; set; }
+
+        public string ImageURL { get; set; }
     }
 }
