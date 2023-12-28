@@ -47,8 +47,8 @@ namespace Word_Grove_API
                 };
             });
 
-            var herokuDBURL = Environment.GetEnvironmentVariable("DATABASE_URL");
-            var dbString = HerokuDBStringConverter.GetDBString(herokuDBURL);
+            // Host={host}:{port};Database={database};Username={user};Password={password};Trust Server Certificate=true;SSL Mode=Prefer
+            var dbString = Environment.GetEnvironmentVariable("DATABASE_URL");
             services.AddDbContext<WordGroveDBContext>(options => options.UseNpgsql(dbString));
 
             services.AddAuthorization();
