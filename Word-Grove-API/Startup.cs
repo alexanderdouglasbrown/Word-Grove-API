@@ -72,8 +72,6 @@ namespace Word_Grove_API
 
             app.UseAuthentication();
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthorization();
